@@ -1,0 +1,15 @@
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/rag/RAGPipeline.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/embeddings/EmbeddingGenerator.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/embeddings/QdrantClient.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/api/ChatResponse.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/api/ChatController.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/crawler/HtmlParser.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/demo/DemoApplication.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/ingestion/MetadataExtractor.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/crawler/CrawlScheduler.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/crawler/ChewyScraper.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/ingestion/IngestionPipeline.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/ingestion/DocumentChunker.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/embeddings/VectorStoreService.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/api/ChatService.java
+/Users/sonamnahar/Documents/workspace/GitHub/demo/src/main/java/com/example/api/ChatRequest.java

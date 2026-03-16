@@ -1,0 +1,15 @@
+com/example/api/ChatService.class
+com/example/ingestion/IngestionPipeline.class
+com/example/embeddings/QdrantClient.class
+com/example/ingestion/MetadataExtractor.class
+com/example/api/ChatResponse.class
+com/example/ingestion/DocumentChunker.class
+com/example/embeddings/EmbeddingGenerator.class
+com/example/crawler/HtmlParser.class
+com/example/demo/DemoApplication.class
+com/example/crawler/CrawlScheduler.class
+com/example/api/ChatRequest.class
+com/example/crawler/ChewyScraper.class
+com/example/api/ChatController.class
+com/example/rag/RAGPipeline.class
+com/example/embeddings/VectorStoreService.class
