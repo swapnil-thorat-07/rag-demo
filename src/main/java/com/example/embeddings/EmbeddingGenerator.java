@@ -10,13 +10,30 @@ public class EmbeddingGenerator {
 
     public EmbeddingGenerator(String apiKey) {
 
-        this.model = OpenAiEmbeddingModel.builder()
+       this.model = OpenAiEmbeddingModel.builder()
                 .apiKey(apiKey)
                 .build();
     }
 
-    public Embedding generate(String text) {
+    public Embedding generate(String text, boolean useCachedEmbeddings) {
 
-        return model.embed(text).content();
+        Embedding embedding = null;
+        if(useCachedEmbeddings){
+            // Use Cached Embeddings loaded from a file.
+            embedding = EmbeddingCache
+                    .getInstance()
+                    .getEmbedding();
+             /*
+              //Use Cached Hardcoded Embeddings.
+               Embedding embedding = CachedEmbeddingSingleton
+                .getInstance()
+                .getEmbedding();*/
+        }
+        else {
+            //Use Embedding Generated from the actual Open AI Model
+            embedding = model.embed(text).content();
+        }
+
+        return embedding;
     }
 }
