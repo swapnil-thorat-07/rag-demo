@@ -2,8 +2,10 @@ package com.example.rag;
 import com.example.crawler.ChewyScraper;
 import com.example.crawler.HtmlParser;
 import com.example.embeddings.EmbeddingGenerator;
+import com.example.search.VectorSearchSingleton;
 import dev.langchain4j.data.embedding.Embedding;
-
+import java.nio.file.Path;
+import java.util.List;
 public class RAGPipeline {
 
     private static String apiKeyOpenAI = "";
@@ -28,6 +30,30 @@ public class RAGPipeline {
             for (float v : vector) {
                 System.out.printf("%.6f%n", v);
             }
+
+
+            VectorSearchSingleton vectorSearch = VectorSearchSingleton.getInstance();
+
+            // Load from file (embedding.txt)
+            //vectorSearch.loadFromFile(Path.of("embedding.txt"));
+            vectorSearch.addEmbedding("doc1", embedding);
+
+            // Suppose this is your cached 1536-dim vector for "Pets"
+            float[] petsVector = new float[] {
+                    0.009923f, 0.002446f, -0.002994f, -0.025563f, -0.019304f, 0.001069f, /* ... continue all 1536 floats ... */
+                    // fill in the rest of the 1536 values
+            };
+
+            // Create a LangChain4j Embedding object
+            Embedding queryEmbedding = new Embedding(petsVector);
+
+            // Now you can use it in your vector search singleton
+            System.out.println("Vector length: " + queryEmbedding.vector().length);
+
+            // Search top 5
+            List<VectorSearchSingleton.SearchResult> results = vectorSearch.search(queryEmbedding.vector(), 5);
+
+            results.forEach(System.out::println);
         }catch(Exception e){
             answerContent = e.getMessage();
         }
