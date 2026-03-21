@@ -10,10 +10,9 @@ public class EmbeddingGenerator {
 
     public EmbeddingGenerator(String apiKey) {
 
-        this.model = null;
-       /*this.model = OpenAiEmbeddingModel.builder()
+       this.model = OpenAiEmbeddingModel.builder()
                 .apiKey(apiKey)
-                .build();*/
+                .build();
     }
 
     public Embedding generate(String text, boolean useCachedEmbeddings) {
