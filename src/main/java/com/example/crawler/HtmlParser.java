@@ -4,7 +4,7 @@ import com.example.ingestion.ChewyEducationChunker.CategoryBlock;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.jsoup.nodes.Node;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,47 +12,52 @@ import java.util.List;
 
 public class HtmlParser {
 
-    /**
-     * Main method to parse Chewy Education page
-     */
     public List<CategoryBlock> parseChewyEducation(String url) throws IOException {
 
         Document doc = Jsoup.connect(url).get();
 
         List<CategoryBlock> blocks = new ArrayList<>();
 
-        // 🔍 Inspecting Chewy page:
-        // Categories are usually in sections with headings (h2/h3)
-        Elements categoryHeaders = doc.select("h2, h3");
-
-        for (Element header : categoryHeaders) {
+        // Only target real category headers
+        for (Element header : doc.select("h2")) {
 
             String category = header.text().trim();
 
-            // Skip useless headers
-            if (category.isEmpty() || category.length() < 3) continue;
-
-            // Get the container after header
-            Element parentSection = header.parent();
-
-            if (parentSection == null) continue;
-
-            // Extract links (articles)
-            Elements links = parentSection.select("a");
+            // Skip non-category headers
+            if (category.equalsIgnoreCase("All Creatures Covered")
+                    || category.equalsIgnoreCase("About Chewy Education")
+                    || category.length() < 3) {
+                continue;
+            }
 
             List<String> articles = new ArrayList<>();
 
-            for (Element link : links) {
-                String text = link.text().trim();
+            // 🔥 KEY FIX: Traverse siblings
+            Node current = header.nextSibling();
 
-                // Filter noise
-                if (!text.isEmpty() && text.length() > 5) {
-                    articles.add(text);
+            while (current != null) {
+
+                if (current instanceof Element element) {
+
+                    // Stop when next category starts
+                    if (element.tagName().equals("h2")) {
+                        break;
+                    }
+
+                    // Collect links
+                    for (Element link : element.select("a")) {
+                        String text = link.text().trim();
+
+                        if (!text.isEmpty() && text.length() > 5) {
+                            articles.add(text);
+                        }
+                    }
                 }
+
+                current = current.nextSibling();
             }
 
-            // Only keep meaningful categories
-            if (!articles.isEmpty() && articles.size() > 2) {
+            if (!articles.isEmpty()) {
                 blocks.add(new CategoryBlock(category, articles));
             }
         }
