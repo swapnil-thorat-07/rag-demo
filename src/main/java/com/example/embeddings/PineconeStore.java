@@ -64,7 +64,7 @@ public class PineconeStore {
 
         JSONObject payload = new JSONObject();
         payload.put("vectors", vectors);
-
+        payload.put("namespace", "default");
         // Send request
         try (OutputStream os = conn.getOutputStream()) {
             byte[] input = payload.toString().getBytes(StandardCharsets.UTF_8);
