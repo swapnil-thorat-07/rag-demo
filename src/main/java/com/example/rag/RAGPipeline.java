@@ -3,6 +3,8 @@ import com.example.crawler.ChewyScraper;
 import com.example.crawler.HtmlParser;
 import com.example.embeddings.EmbeddingGenerator;
 import com.example.embeddings.PineconeStore;
+import com.example.ingestion.ChewyEducationChunker;
+import com.example.ingestion.ChewyEducationChunker.CategoryBlock;
 import com.example.search.VectorSearchSingleton;
 import com.example.utils.Constants;
 import dev.langchain4j.data.embedding.Embedding;
@@ -16,14 +18,19 @@ public class RAGPipeline {
         StringBuilder answer = new StringBuilder();
         try {
             String pageText = "";
-          /*  String pageContent = scrapper.fetchPage("https://www.chewy.com/education");
+            String pageContent = scrapper.fetchPage("https://www.chewy.com/education");
             System.out.println("HTML Page Content:\n"+pageContent);
 
             HtmlParser parser = new HtmlParser();
-            pageText = parser.extractText(pageContent);
-            System.out.println("pageText:\n"+pageText);
-             answerContent = pageText;
-            */
+
+            List<CategoryBlock> blocks =
+                    parser.parseChewyEducation("https://www.chewy.com/education");
+            System.out.println("blocks:"+blocks);
+            ChewyEducationChunker chunker = new ChewyEducationChunker();
+            var chunks = chunker.chunkByCategory(blocks);
+      //      System.out.println("pageText:\n"+pageText);
+            System.out.println("chunks:\n"+chunks);
+
             EmbeddingGenerator embeddingGenerator = new EmbeddingGenerator(Constants.OPEN_AI_API_KEY);
             Embedding pageEmbedding = embeddingGenerator.generate(pageText, true);
 
